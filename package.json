@@ -20,6 +20,9 @@
   ],
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
   "license": "MIT",
+  "engines": {
+    "node": ">=6"
+  },
   "devDependencies": {
     "commist": "^1.1.0",
     "fastify": "^2.0.0",
