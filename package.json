@@ -1,6 +1,6 @@
 {
   "name": "fastify-405",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Add 405 HTTP status to your routes",
   "main": "plugin.js",
   "scripts": {
