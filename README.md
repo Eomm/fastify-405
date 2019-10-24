@@ -56,7 +56,7 @@ You can pass the following options during the registration:
 |`allow` | `['GET', 'POST']` | The method that the route will allow, the HTTP methods that are not in this array will reply 405
 
 ```js
-fastify.register(require('fastify-rate-limit'), {
+fastify.register(require('fastify-405'), {
   regexp: /\/foo.*/, // must be a regular expression
   allow: ['GET', 'POST'] // could be only a subset of: ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'PATCH']
 })
