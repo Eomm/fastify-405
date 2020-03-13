@@ -1,6 +1,8 @@
 # fastify-405
 
-[![Coverage Status](https://coveralls.io/repos/github/Eomm/fastify-405/badge.svg?branch=master)](https://coveralls.io/github/Eomm/fastify-405?branch=master) [![Build Status](https://travis-ci.com/Eomm/fastify-405.svg?branch=master)](https://travis-ci.com/Eomm/fastify-405) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Coverage Status](https://coveralls.io/repos/github/Eomm/fastify-405/badge.svg?branch=master)](https://coveralls.io/github/Eomm/fastify-405?branch=master) 
+[![Build Status](https://github.com/Eomm/fastify-405/workflows/ci/badge.svg)](https://github.com/Eomm/fastify-405/actions)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Add 405 Method Not Allowed HTTP status to your routes, instead of the default 404.
 
