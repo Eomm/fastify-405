@@ -30,7 +30,7 @@
     "tap": "^12.7.0"
   },
   "dependencies": {
-    "fastify-plugin": "^1.6.0"
+    "fastify-plugin": "^2.0.2"
   },
   "bugs": {
     "url": "https://github.com/Eomm/fastify-405/issues"
