@@ -13,11 +13,13 @@ Add 405 Method Not Allowed HTTP status to your routes, instead of the default 40
 npm install fastify-405
 ```
 
-This plugin support Node.js >=6 and Fastify ^2
+This plugin support Node.js >=10 and Fastify ^3
+Checkout the v1 for Fastify v2.
 
 ## Usage
 
-Register the plugin with some custom option. It will add an `onRoute` hook and will add an handler
+Register the plugin with some custom option.
+It will add an `onRoute` hook and will add an handler
 that replay with HTTP status 405 and the `allow` response header.
 
 The `allow` header will contains what you define in the options.

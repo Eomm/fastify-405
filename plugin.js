@@ -72,6 +72,6 @@ function fourOhfive (fastify, opts, next) {
 }
 
 module.exports = fp(fourOhfive, {
-  fastify: '^2.0.0',
+  fastify: '^3.0.0',
   name: 'fastify-405'
 })
