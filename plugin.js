@@ -57,7 +57,7 @@ function fourOhfive (fastify, opts, next) {
     fastify.log.debug('Adding 405 routes for [%s] with methods %o', routeOptions.url, unAllow)
     fastify.route({
       method: unAllow,
-      url: routeOptions.url,
+      path: routeOptions.routePath,
       config: { ignore: kIgnore },
       handler: (req, reply) => {
         reply
@@ -72,6 +72,6 @@ function fourOhfive (fastify, opts, next) {
 }
 
 module.exports = fp(fourOhfive, {
-  fastify: '^3.0.0',
+  fastify: '^3.2.0',
   name: 'fastify-405'
 })
