@@ -22,15 +22,15 @@
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "devDependencies": {
-    "fastify": "^2.0.0",
+    "fastify": "^3.2.0",
     "standard": "^14.0.0",
-    "tap": "^12.7.0"
+    "tap": "^14.10.8"
   },
   "dependencies": {
-    "fastify-plugin": "^1.6.0"
+    "fastify-plugin": "^2.2.0"
   },
   "bugs": {
     "url": "https://github.com/Eomm/fastify-405/issues"
