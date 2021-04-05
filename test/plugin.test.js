@@ -10,7 +10,7 @@ const handler = (req, reply) => { reply.send('hello') }
 function inject (t, method, status, url = '/') {
   this.inject({ method, url }, (err, res) => {
     t.error(err)
-    t.strictEqual(res.statusCode, status)
+    t.equal(res.statusCode, status)
   })
 }
 
@@ -139,7 +139,7 @@ test('Should fail with wrong regexp settings', t => {
   app.register(fastify405, { regexp: 'not a reg exp', allow: 'not an array' })
   app.ready((err) => {
     t.type(err, Error)
-    t.strictEqual(err.message, 'Options.regexp must be a regular expression')
+    t.equal(err.message, 'Options.regexp must be a regular expression')
   })
 })
 
@@ -149,7 +149,7 @@ test('Should fail with wrong allow settings', t => {
   app.register(fastify405, { allow: 'not a valid array' })
   app.ready((err) => {
     t.type(err, Error)
-    t.strictEqual(err.message, 'Options.allow must be an array with only these values: GET,POST,HEAD,PUT,DELETE,OPTIONS,PATCH')
+    t.equal(err.message, 'Options.allow must be an array with only these values: GET,POST,HEAD,PUT,DELETE,OPTIONS,PATCH')
   })
 })
 
@@ -159,6 +159,6 @@ test('Should fail with wrong allow array settings', t => {
   app.register(fastify405, { allow: ['foo'] })
   app.ready((err) => {
     t.type(err, Error)
-    t.strictEqual(err.message, 'Options.allow must be an array with only these values: GET,POST,HEAD,PUT,DELETE,OPTIONS,PATCH')
+    t.equal(err.message, 'Options.allow must be an array with only these values: GET,POST,HEAD,PUT,DELETE,OPTIONS,PATCH')
   })
 })
