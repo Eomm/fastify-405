@@ -7,11 +7,9 @@ const fastify405 = require('../plugin')
 const handler = (req, reply) => { reply.send('hello') }
 
 // count 2 test for the plan
-function inject (t, method, status, url = '/') {
-  this.inject({ method, url }, (err, res) => {
-    t.error(err)
-    t.equal(res.statusCode, status)
-  })
+async function inject (t, method, status, url = '/', msg) {
+  const res = await this.inject({ method, url })
+  t.equal(res.statusCode, status, msg)
 }
 
 test('Should load correctly the plugin', t => {
@@ -21,116 +19,110 @@ test('Should load correctly the plugin', t => {
   app.ready(t.error)
 })
 
-test('Should register 405 routes except GET and POST', t => {
-  t.plan(14)
+test('Should register 405 routes except GET and POST', async t => {
   const app = Fastify()
-  app.register(fastify405)
+  await app.register(fastify405)
   app.get('/', handler)
 
-  inject.call(app, t, 'GET', 200)
-  inject.call(app, t, 'POST', 404)
-  inject.call(app, t, 'HEAD', 405)
-  inject.call(app, t, 'PUT', 405)
-  inject.call(app, t, 'DELETE', 405)
-  inject.call(app, t, 'OPTIONS', 405)
-  inject.call(app, t, 'PATCH', 405)
+  await inject.call(app, t, 'GET', 200)
+  await inject.call(app, t, 'POST', 404)
+  await inject.call(app, t, 'HEAD', 405)
+  await inject.call(app, t, 'PUT', 405)
+  await inject.call(app, t, 'DELETE', 405)
+  await inject.call(app, t, 'OPTIONS', 405)
+  await inject.call(app, t, 'PATCH', 405)
 })
 
-test('Should register 405 routes with final slash', t => {
-  t.plan(16)
+test('Should register 405 routes with final slash', async t => {
   const app = Fastify()
   app.get('/path', handler)
-  app.register(fastify405)
+  await app.register(fastify405)
   app.get('/path/', handler)
 
   app.get('/second', handler)
   app.get('/second/', handler)
 
-  inject.call(app, t, 'GET', 200, '/path')
-  inject.call(app, t, 'GET', 200, '/path/')
-  inject.call(app, t, 'GET', 200, '/second')
-  inject.call(app, t, 'GET', 200, '/second/')
+  await inject.call(app, t, 'GET', 200, '/path')
+  await inject.call(app, t, 'GET', 200, '/path/')
+  await inject.call(app, t, 'GET', 200, '/second')
+  await inject.call(app, t, 'GET', 200, '/second/')
 
-  inject.call(app, t, 'HEAD', 404, '/path')
-  inject.call(app, t, 'HEAD', 405, '/path/')
-  inject.call(app, t, 'HEAD', 405, '/second')
-  inject.call(app, t, 'HEAD', 405, '/second/')
+  await inject.call(app, t, 'HEAD', 200, '/path', 'route registered before the plugin')
+  await inject.call(app, t, 'HEAD', 405, '/path/')
+  await inject.call(app, t, 'HEAD', 405, '/second')
+  await inject.call(app, t, 'HEAD', 405, '/second/')
 })
 
-test('Should register 405 routes only for not-set methods', t => {
-  t.plan(14)
+test('Should register 405 routes only for not-set methods', async t => {
   const app = Fastify()
-  app.register(fastify405, { allow: ['GET', 'HEAD', 'OPTIONS', 'PUT'] })
+  await app.register(fastify405, { allow: ['GET', 'HEAD', 'OPTIONS', 'PUT'] })
   app.get('/', handler)
   app.head('/', handler)
   app.options('/', handler)
 
-  inject.call(app, t, 'GET', 200)
-  inject.call(app, t, 'POST', 405)
-  inject.call(app, t, 'HEAD', 200)
-  inject.call(app, t, 'PUT', 404)
-  inject.call(app, t, 'DELETE', 405)
-  inject.call(app, t, 'OPTIONS', 200)
-  inject.call(app, t, 'PATCH', 405)
+  await inject.call(app, t, 'GET', 200)
+  await inject.call(app, t, 'POST', 405)
+  await inject.call(app, t, 'HEAD', 200)
+  await inject.call(app, t, 'PUT', 404)
+  await inject.call(app, t, 'DELETE', 405)
+  await inject.call(app, t, 'OPTIONS', 200)
+  await inject.call(app, t, 'PATCH', 405)
 })
 
-test('Should avoid 405 routes for some URL', t => {
-  t.plan(16)
+test('Should avoid 405 routes for some URL', async t => {
   const app = Fastify()
-  app.register(fastify405, { regexp: /\/route42.*/ })
+  await app.register(fastify405, { regexp: /\/route42.*/ })
 
   app.get('/', handler)
   app.get('/route4', handler)
   app.get('/route42', handler)
   app.get('/route42/hello', handler)
 
-  inject.call(app, t, 'GET', 200, '/')
-  inject.call(app, t, 'GET', 200, '/route4')
-  inject.call(app, t, 'GET', 200, '/route42')
-  inject.call(app, t, 'GET', 200, '/route42/hello')
+  await inject.call(app, t, 'GET', 200, '/')
+  await inject.call(app, t, 'GET', 200, '/route4')
+  await inject.call(app, t, 'GET', 200, '/route42')
+  await inject.call(app, t, 'GET', 200, '/route42/hello')
 
-  inject.call(app, t, 'PUT', 404, '/')
-  inject.call(app, t, 'PUT', 404, '/route4')
-  inject.call(app, t, 'PUT', 405, '/route42')
-  inject.call(app, t, 'PUT', 405, '/route42/hello')
+  await inject.call(app, t, 'PUT', 404, '/')
+  await inject.call(app, t, 'PUT', 404, '/route4')
+  await inject.call(app, t, 'PUT', 405, '/route42')
+  await inject.call(app, t, 'PUT', 405, '/route42/hello')
 })
 
-test('Should avoid 405 routes for URL registered before', t => {
-  t.plan(12)
+test('Should avoid 405 routes for URL registered before', async t => {
   const app = Fastify()
 
   app.route({ method: ['GET', 'POST'], url: '/', handler })
-  app.register(fastify405)
+  await app.register(fastify405)
   app.route({ method: ['GET', 'POST'], url: '/route4', handler })
 
-  inject.call(app, t, 'GET', 200, '/')
-  inject.call(app, t, 'GET', 200, '/route4')
+  await inject.call(app, t, 'GET', 200, '/')
+  await inject.call(app, t, 'GET', 200, '/route4')
 
-  inject.call(app, t, 'POST', 200, '/')
-  inject.call(app, t, 'POST', 200, '/route4')
+  await inject.call(app, t, 'POST', 200, '/')
+  await inject.call(app, t, 'POST', 200, '/route4')
 
-  inject.call(app, t, 'PUT', 404, '/')
-  inject.call(app, t, 'PUT', 405, '/route4')
+  await inject.call(app, t, 'PUT', 404, '/')
+  await inject.call(app, t, 'PUT', 405, '/route4')
 })
 
-test('Should register 405 in a encapsulated context', t => {
-  t.plan(12)
+test('Should register 405 in a encapsulated context', async t => {
   const app = Fastify()
-  app.register((instance, opts, next) => {
-    instance.register(fastify405)
+  await app.register(async (instance, opts) => {
+    await instance.register(fastify405)
     instance.get('/', handler)
-    next()
   }, { prefix: '/prefix' })
 
   app.get('/', handler)
 
-  inject.call(app, t, 'GET', 200, '/')
-  inject.call(app, t, 'POST', 404, '/')
-  inject.call(app, t, 'HEAD', 404, '/')
+  await inject.call(app, t, 'GET', 200, '/')
+  await inject.call(app, t, 'HEAD', 200, '/', 'registered by fastify by default')
+  await inject.call(app, t, 'POST', 404, '/')
+  await inject.call(app, t, 'PUT', 404, '/')
 
-  inject.call(app, t, 'GET', 200, '/prefix')
-  inject.call(app, t, 'POST', 404, '/prefix')
-  inject.call(app, t, 'HEAD', 405, '/prefix')
+  await inject.call(app, t, 'GET', 200, '/prefix')
+  await inject.call(app, t, 'POST', 404, '/prefix')
+  await inject.call(app, t, 'PUT', 405, '/prefix')
 })
 
 test('Should fail with wrong regexp settings', t => {

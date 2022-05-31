@@ -25,9 +25,9 @@
     "node": ">=10"
   },
   "devDependencies": {
-    "fastify": "^3.2.0",
+    "fastify": "^4.0.0-rc.3",
     "standard": "^16.0.4",
-    "tap": "^15.0.1"
+    "tap": "^16.2.0"
   },
   "dependencies": {
     "fastify-plugin": "^3.0.0"
