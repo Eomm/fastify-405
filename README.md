@@ -1,7 +1,7 @@
 # fastify-405
 
-[![Coverage Status](https://coveralls.io/repos/github/Eomm/fastify-405/badge.svg?branch=master)](https://coveralls.io/github/Eomm/fastify-405?branch=master) 
 [![Build Status](https://github.com/Eomm/fastify-405/workflows/ci/badge.svg)](https://github.com/Eomm/fastify-405/actions)
+[![npm](https://img.shields.io/npm/v/fastify-405)](https://www.npmjs.com/package/fastify-405)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Add 405 Method Not Allowed HTTP status to your routes, instead of the default 404.
@@ -13,8 +13,13 @@ Add 405 Method Not Allowed HTTP status to your routes, instead of the default 40
 npm install fastify-405
 ```
 
-This plugin support Node.js >=10 and Fastify ^3.2.x
-Checkout the v1 for Fastify v2.
+### Compatible
+
+| Plugin version | Fastify version |
+| ------------- |:---------------:|
+| `^1.0.0` | `^2.0.0` |
+| `^2.0.0` | `^3.2.0` |
+
 
 ## Usage
 
