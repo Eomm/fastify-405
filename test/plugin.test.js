@@ -14,13 +14,13 @@ async function inject (t, method, status, url = '/', msg) {
 
 test('Should load correctly the plugin', t => {
   t.plan(1)
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405)
   app.ready(t.error)
 })
 
 test('Should register 405 routes except GET and POST', async t => {
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   await app.register(fastify405)
   app.get('/', handler)
 
@@ -34,7 +34,7 @@ test('Should register 405 routes except GET and POST', async t => {
 })
 
 test('Should register 405 routes with final slash', async t => {
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: true })
   app.get('/path', handler)
   await app.register(fastify405)
   app.get('/path/', handler)
@@ -54,7 +54,7 @@ test('Should register 405 routes with final slash', async t => {
 })
 
 test('Should register 405 routes only for not-set methods', async t => {
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   await app.register(fastify405, { allow: ['GET', 'HEAD', 'OPTIONS', 'PUT'] })
   app.get('/', handler)
   app.head('/', handler)
@@ -70,7 +70,7 @@ test('Should register 405 routes only for not-set methods', async t => {
 })
 
 test('Should avoid 405 routes for some URL', async t => {
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   await app.register(fastify405, { regexp: /\/route42.*/ })
 
   app.get('/', handler)
@@ -90,7 +90,7 @@ test('Should avoid 405 routes for some URL', async t => {
 })
 
 test('Should avoid 405 routes for URL registered before', async t => {
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
 
   app.route({ method: ['GET', 'POST'], url: '/', handler })
   await app.register(fastify405)
@@ -107,7 +107,7 @@ test('Should avoid 405 routes for URL registered before', async t => {
 })
 
 test('Should register 405 in a encapsulated context', async t => {
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: true })
   await app.register(async (instance, opts) => {
     await instance.register(fastify405)
     instance.get('/', handler)
@@ -127,7 +127,7 @@ test('Should register 405 in a encapsulated context', async t => {
 
 test('Should fail with wrong regexp settings', t => {
   t.plan(2)
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405, { regexp: 'not a reg exp', allow: 'not an array' })
   app.ready((err) => {
     t.type(err, Error)
@@ -137,7 +137,7 @@ test('Should fail with wrong regexp settings', t => {
 
 test('Should fail with wrong allow settings', t => {
   t.plan(2)
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405, { allow: 'not a valid array' })
   app.ready((err) => {
     t.type(err, Error)
@@ -147,7 +147,7 @@ test('Should fail with wrong allow settings', t => {
 
 test('Should fail with wrong allow array settings', t => {
   t.plan(2)
-  const app = Fastify()
+  const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405, { allow: ['foo'] })
   app.ready((err) => {
     t.type(err, Error)
