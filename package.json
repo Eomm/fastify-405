@@ -4,10 +4,9 @@
   "description": "Add 405 HTTP status to your routes",
   "main": "plugin.js",
   "scripts": {
-    "unit": "tap -J test/**/*.test.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "npm run lint && npm run unit",
+    "test": "tap -J test/**/*.test.js",
     "coveralls": "npm test -- --cov"
   },
   "repository": {
@@ -20,17 +19,18 @@
     "http-status"
   ],
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
+  "funding": "https://github.com/Eomm/fastify-405?sponsor=1",
   "license": "MIT",
   "engines": {
     "node": ">=10"
   },
   "devDependencies": {
-    "fastify": "^4.0.0-rc.3",
+    "fastify": "^4.7.0",
     "standard": "^17.0.0",
     "tap": "^16.2.0"
   },
   "dependencies": {
-    "fastify-plugin": "^3.0.0"
+    "fastify-plugin": "^4.2.1"
   },
   "bugs": {
     "url": "https://github.com/Eomm/fastify-405/issues"
