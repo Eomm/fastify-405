@@ -2,7 +2,7 @@
 const t = require('tap')
 const test = t.test
 const Fastify = require('fastify')
-const fastify405 = require('../plugin')
+const fastify405 = require('../')
 
 const handler = (req, reply) => { reply.send('hello') }
 

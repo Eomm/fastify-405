@@ -2,12 +2,14 @@
   "name": "fastify-405",
   "version": "3.1.0",
   "description": "Add 405 HTTP status to your routes",
-  "main": "plugin.js",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "lint": "standard",
-    "lint:fix": "standard --fix",
-    "test": "tap -J test/**/*.test.js",
-    "coveralls": "npm test -- --cov"
+    "lint": "standard && npm run lint:typescript",
+    "lint:fix": "standard --fix && npm run lint:typescript -- --fix",
+    "lint:typescript": "standard --parser @typescript-eslint/parser --plugin @typescript-eslint/eslint-plugin *.ts test/**/*.ts",
+    "test": "tap test/**/*.test.js && npm run test:typescript",
+    "test:typescript": "tsd"
   },
   "repository": {
     "type": "git",
@@ -25,9 +27,13 @@
     "node": ">=10"
   },
   "devDependencies": {
+    "@types/node": "^18.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "fastify": "^4.7.0",
     "standard": "^17.0.0",
-    "tap": "^16.2.0"
+    "tap": "^16.2.0",
+    "tsd": "^0.24.1"
   },
   "dependencies": {
     "fastify-plugin": "^4.2.1"
@@ -35,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/Eomm/fastify-405/issues"
   },
-  "homepage": "https://github.com/Eomm/fastify-405#readme"
+  "homepage": "https://github.com/Eomm/fastify-405#readme",
+  "tsd": {
+    "directory": "test/types"
+  }
 }
