@@ -2,14 +2,14 @@ import type { FastifyPluginCallback, HTTPMethods } from 'fastify'
 
 export interface Fastify405Options {
   /**
-   * Expose a route that will return the JSON structure.
-   * By default the route is exposed at `GET /json-overview`.
+   * The regular expression the route must fulfil in order to add the 405 handler
    * @default "/.*\/"
    */
    regexp?: RegExp,
 
   /**
-   * Customize the route's options when `exposeRoute` is set to `true`
+   * The method that the route will allow, the HTTP methods that are not in this array will reply 405
+   * @default ["GET", "POST"]
    */
    allow?: HTTPMethods[],
 }
