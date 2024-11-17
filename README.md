@@ -1,6 +1,6 @@
 # fastify-405
 
-[![Build Status](https://github.com/Eomm/fastify-405/workflows/ci/badge.svg)](https://github.com/Eomm/fastify-405/actions)
+[![ci](https://github.com/Eomm/fastify-405/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Eomm/fastify-405/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/fastify-405)](https://www.npmjs.com/package/fastify-405)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -17,9 +17,10 @@ npm install fastify-405
 
 | Plugin version | Fastify version |
 | ------------- |:---------------:|
-| `^1.0.0` | `^2.0.0` |
-| `^2.0.0` | `^3.2.0` |
+| `^4.0.0` | `^5.0.0` |
 | `^3.0.0` | `^4.0.0` |
+| `^2.0.0` | `^3.2.0` |
+| `^1.0.0` | `^2.0.0` |
 
 
 ## Usage
