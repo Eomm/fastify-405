@@ -3,7 +3,7 @@
 const fp = require('fastify-plugin')
 
 const kIgnore = Symbol('fastify-405:ignoreOnRoute')
-const HTTP_METHODS = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'PATCH']
+const HTTP_METHODS = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'TRACE']
 
 function fourOhfive (fastify, opts, next) {
   const options = Object.assign({
@@ -25,7 +25,7 @@ function fourOhfive (fastify, opts, next) {
 
   const registered = new Map()
 
-  fastify.addHook('onRoute', (routeOptions) => {
+  fastify.addHook('onRoute', function support405 (routeOptions) {
     if ((routeOptions.config || {}).ignore === kIgnore) {
       return
     }
@@ -72,6 +72,6 @@ function fourOhfive (fastify, opts, next) {
 }
 
 module.exports = fp(fourOhfive, {
-  fastify: '^4',
+  fastify: '^5',
   name: 'fastify-405'
 })

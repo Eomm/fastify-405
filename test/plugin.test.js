@@ -1,5 +1,5 @@
 'use strict'
-const t = require('tap')
+const t = require('node:test')
 const test = t.test
 const Fastify = require('fastify')
 const fastify405 = require('../')
@@ -9,14 +9,17 @@ const handler = (req, reply) => { reply.send('hello') }
 // count 2 test for the plan
 async function inject (t, method, status, url = '/', msg) {
   const res = await this.inject({ method, url })
-  t.equal(res.statusCode, status, msg)
+  t.assert.strictEqual(res.statusCode, status, msg)
 }
 
-test('Should load correctly the plugin', t => {
+test('Should load correctly the plugin', (t, done) => {
   t.plan(1)
   const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405)
-  app.ready(t.error)
+  app.ready((err) => {
+    t.assert.ifError(err)
+    done()
+  })
 })
 
 test('Should register 405 routes except GET and POST', async t => {
@@ -125,32 +128,35 @@ test('Should register 405 in a encapsulated context', async t => {
   await inject.call(app, t, 'PUT', 405, '/prefix')
 })
 
-test('Should fail with wrong regexp settings', t => {
+test('Should fail with wrong regexp settings', (t, done) => {
   t.plan(2)
   const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405, { regexp: 'not a reg exp', allow: 'not an array' })
   app.ready((err) => {
-    t.type(err, Error)
-    t.equal(err.message, 'Options.regexp must be a regular expression')
+    t.assert.ok(err instanceof Error)
+    t.assert.strictEqual(err.message, 'Options.regexp must be a regular expression')
+    done()
   })
 })
 
-test('Should fail with wrong allow settings', t => {
+test('Should fail with wrong allow settings', (t, done) => {
   t.plan(2)
   const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405, { allow: 'not a valid array' })
   app.ready((err) => {
-    t.type(err, Error)
-    t.equal(err.message, 'Options.allow must be an array with only these values: GET,POST,HEAD,PUT,DELETE,OPTIONS,PATCH')
+    t.assert.ok(err instanceof Error)
+    t.assert.match(err.message, /^Options.allow must be an array with only these values/)
+    done()
   })
 })
 
-test('Should fail with wrong allow array settings', t => {
+test('Should fail with wrong allow array settings', (t, done) => {
   t.plan(2)
   const app = Fastify({ exposeHeadRoutes: false })
   app.register(fastify405, { allow: ['foo'] })
   app.ready((err) => {
-    t.type(err, Error)
-    t.equal(err.message, 'Options.allow must be an array with only these values: GET,POST,HEAD,PUT,DELETE,OPTIONS,PATCH')
+    t.assert.ok(err instanceof Error)
+    t.assert.match(err.message, /^Options.allow must be an array with only these values/)
+    done()
   })
 })
