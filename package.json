@@ -7,9 +7,9 @@
   "scripts": {
     "lint": "standard && npm run lint:typescript",
     "lint:fix": "standard --fix && npm run lint:typescript -- --fix",
-    "lint:typescript": "standard --parser @typescript-eslint/parser --plugin @typescript-eslint/eslint-plugin *.ts test/**/*.ts",
+    "lint:typescript": "standard --parser @typescript-eslint/parser --plugin @typescript-eslint/eslint-plugin *.ts test-types/**/*.ts",
     "test": "npm run test:unit && npm run test:typescript",
-    "test:unit": "c8 --100 node --test test/*.test.js",
+    "test:unit": "c8 --100 node --test",
     "test:typescript": "tsd"
   },
   "repository": {
@@ -44,6 +44,6 @@
   },
   "homepage": "https://github.com/Eomm/fastify-405#readme",
   "tsd": {
-    "directory": "test/types"
+    "directory": "test-types"
   }
 }
