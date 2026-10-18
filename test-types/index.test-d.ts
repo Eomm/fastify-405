@@ -1,7 +1,7 @@
 import { expectType } from 'tsd'
 
 import fastify from 'fastify'
-import fastify405 from '../../index'
+import fastify405 from '../index'
 
 const app = fastify()
 
